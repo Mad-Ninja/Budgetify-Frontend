@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+body,
+.sidenav {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #eceded;
+}
+.body__login-page {
+  background-image: url(assets/money-savings-currency-fingers.png);
+  background-size: cover;
+}
+
+#logout-icon {
+  position: adsolute;
+  font-size: 40px;
+}
+button:hover {
+  cursor: pointer;
+}
+
+.mat-form-field-underline {
+  display: none;
+}
+a,
+.transactions-sort__button {
+  cursor: pointer;
+  display: block;
+  transition: 0.7s;
+  &:hover {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}

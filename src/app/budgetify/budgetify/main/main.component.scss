@@ -1,0 +1,24 @@
+.content-wrapper {
+  margin-top: 40px;
+}
+.no-data__container{
+  width: 40rem;
+  height: 300px;
+  font-size: 50px;
+  line-height: 60px;
+  text-align: center;
+  margin-top: 10rem;
+}
+.no-data__accounts{
+  position: relative;
+  right: 18%;
+}
+
+.side-buttons-container {
+  position: relative;
+  top: 2.6rem;
+}
+.budgetify__main {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,35 @@
+<div class="cards-wrapper">
+  <cdk-virtual-scroll-viewport
+    appendOnly
+    itemSize="50"
+    class="example-viewport"
+  >
+    <div
+      class="card-item"
+      *cdkVirtualFor="
+        let card of cardService.accountCards;
+        let indexOfelement = index
+      "
+      (click)="cardService.clickOnCard($event, indexOfelement)"
+      [ngClass]="{ active: indexOfelement === cardService.selectedIndex }"
+    >
+      <p class="card-item__title">
+        {{
+          card.name.length > 11 ? (card.name | slice: 0:11) + '...' : card.name
+        }}
+      </p>
+      <p
+        class="card-item__currency"
+        [class.small-symbol]="card.currency.symbolNative.length >= 3"
+      >
+        {{ card.currency.symbolNative }}
+      </p>
+      <p class="card-item__amount">{{ card.amount }}</p>
+      <a
+        class="card-item__info-link"
+        (click)="cardService.clickOnMoreDetails($event, indexOfelement)"
+        >More Details</a
+      >
+    </div>
+  </cdk-virtual-scroll-viewport>
+</div>

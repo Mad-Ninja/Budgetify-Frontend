@@ -1,0 +1,67 @@
+.auth-form {
+  .auth-form__error{
+    width: 350px;
+    height: 30px;
+    background: rgb(201, 65, 65);
+    border-radius: 10px;
+    display: flex;
+    align-items:center;
+    justify-content: space-around;
+    color: #FFf;
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: 3px;
+    position: absolute;
+    top: 18rem;
+    .material-icons:hover{
+      transform: scaleX(1.3);
+      cursor: pointer;
+    }
+  }
+  .mat-form-field{
+    margin-bottom: 30px;
+    position: relative;
+    .validation-error{
+      margin-top: 15px;
+      position: absolute;
+      color: red;
+      font-size: 15px;
+    }
+  }
+  h3 {
+    font-family: 'Alata';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 55px;
+    text-transform: capitalize;
+  margin-bottom: 5rem;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12rem;
+
+  &__row {
+    width: 30rem;
+    max-width: 350px;
+    mat-label{
+      font-size: 20px;
+    }
+    input{
+      background-color: rgba(0,0,0,0);
+      font-size: 20px;
+    }
+  }
+
+  &__form {
+    display: contents;
+    button{
+      width: 350px;
+      height: 55px;
+      font-size: 30px;
+      letter-spacing: 1rem;
+    }
+  }
+}
+

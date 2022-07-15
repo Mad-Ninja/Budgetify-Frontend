@@ -1,0 +1,57 @@
+<div
+  #categoryCard
+  class="categories-card"
+  [class.expense-category]="category.type === 'expense'"
+  [class.income-category]="category.type === 'income'"
+>
+  <form [formGroup]="categoryCardForm" #catCardForm>
+    <input
+      type="text"
+      formControlName="categoryName"
+      autoSizeInput
+      #categoryTitle
+      [ngModel]="category.name"
+      [minWidth]="50"
+      [includePadding]="false"
+      [includeBorders]="false"
+      [extraWidth]="10"
+      class="input-category"
+    />
+
+    <mat-icon
+      class="button"
+      #edit
+      aria-hidden="false"
+      aria-label="Example edit icon"
+      *ngIf="editAction === false"
+      (click)="onEditClick()"
+      >edit</mat-icon
+    >
+
+    <mat-icon
+      [class.no-actions]="categoryCardForm.invalid"
+      class="button"
+      type="submit"
+      #done
+      aria-hidden="false"
+      aria-label="Example done icon"
+      *ngIf="editAction === true"
+      (click)="onDoneClick()"
+      >done</mat-icon
+    >
+  </form>
+  <mat-icon
+    aria-hidden="false"
+    aria-label="Example delete icon "
+    *ngIf="editAction === false"
+    (click)="onDeleteClick()"
+    >delete</mat-icon
+  >
+  <mat-icon
+    aria-hidden="false"
+    aria-label="Example done icon"
+    *ngIf="editAction === true"
+    (click)="onCloseClick()"
+    >close</mat-icon
+  >
+</div>

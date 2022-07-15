@@ -1,0 +1,127 @@
+.no-data__container {
+  width: 40rem;
+  height: 300px;
+  font-size: 50px;
+  line-height: 60px;
+  text-align: center;
+  margin-top: 10rem;
+}
+.no-stat-exp {
+  font-size: 30px;
+  line-height: 40px;
+  text-align: center;
+  width: 480px;
+}
+.budgetify__statistic {
+  display: flex;
+  .budgetify__statistic-content {
+    margin-left: 10rem;
+    margin-top: 2.5rem;
+    .statistic-btns {
+      margin-bottom: 25px;
+      mat-button-toggle-group {
+        border: none;
+        border-radius: 10px;
+      }
+      .mat-button-toggle-checked {
+        box-shadow: 0 0 30px #000 !important;
+        border: 2px #000 solid !important;
+        border-radius: 10px !important;
+        background-color: #fff !important;
+      }
+      .statistic-btns__categories,
+      .statistic-btns__montly {
+        height: 49px;
+        width: 220px;
+        font-size: 20px;
+        line-height: 26px;
+      }
+    }
+    mat-label {
+      padding-left: 15px;
+      color: #000;
+      font-size: 20px;
+    }
+    .data-picker {
+      margin-bottom: 25px;
+      width: 440px;
+      height: 65px;
+      background-color: #fff;
+      border-radius: 10px;
+      border: none;
+      box-sizing: border-box;
+
+      mat-date-range-input {
+        padding-left: 15px;
+        margin-top: 10px;
+        font-size: 20px;
+      }
+      mat-datepicker-toggle {
+        font-size: 40px;
+        margin-right: 30px;
+      }
+    }
+    .total-expenses__output {
+      margin-bottom: 25px;
+      mat-form-field {
+        width: 440px;
+        height: 65px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: none;
+      }
+    }
+    .total-expenses__output {
+      input {
+        padding-left: 15px;
+        color: #000;
+        padding-top: 10px;
+        font-size: 30px;
+      }
+    }
+    .statistic-table__categories {
+      width: 500px;
+      .mat-elevation-z8 {
+        width: 500px;
+        ng-container {
+          margin-left: 20px;
+        }
+      }
+      mat-header-cell {
+        font-size: 20px;
+        color: #000;
+      }
+      mat-cell {
+        font-size: 20px;
+      }
+      mat-header-row {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        background: #d5f1ec;
+      }
+      mat-table {
+        border-radius: 15px;
+      }
+    }
+    .statistic-table__month {
+      table {
+        width: 45rem;
+      }
+      [mat-header-cell] {
+        font-size: 20px;
+        color: #000;
+      }
+      [mat-cell] {
+        font-size: 15px;
+      }
+      [mat-header-row] {
+        background: #d5f1ec;
+      }
+
+      [mat-footer-cell] {
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  }
+}

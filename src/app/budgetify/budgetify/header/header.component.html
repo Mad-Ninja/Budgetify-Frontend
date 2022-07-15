@@ -1,0 +1,26 @@
+<header class="header-container">
+  <div class="header-title" routerLink="/budgetify/main">
+    <h1 class="header-text__title">Budgetify</h1>
+  </div>
+
+  <nav class="header-links">
+    <ul>
+      <li><a routerLink="/budgetify/main">Main</a></li>
+      <li><a routerLink="/budgetify/categories">Categories</a></li>
+      <li><a routerLink="/budgetify/statistic">Statistic</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-user-info">
+    <button mat-button [matMenuTriggerFor]="beforeMenu">
+      <mat-icon>account_circle</mat-icon>
+      <span>{{ fullUserName }}</span>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="logout()">
+        <span id="logout-icon" class="material-icons"> logout </span>
+        <span id="logout-text">Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</header>

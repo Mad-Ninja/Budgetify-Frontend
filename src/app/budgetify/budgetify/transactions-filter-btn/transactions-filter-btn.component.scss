@@ -1,0 +1,41 @@
+.transaction-filter__button {
+  width: 235px;
+  height: 49px;
+  border-radius: 10px;
+  background: #ffff;
+  font-size: 20px;
+  line-height: 26px;
+  border: none;
+  text-align: left;
+  display: flex;
+  padding-top: 7px;
+  padding-left: 11px;
+  margin-bottom: 16px;
+  transition: 0.3s;
+    &:hover {
+    background: #f3f3f3;
+    -webkit-box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+    -moz-box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+    box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+  }
+
+  .expense-filter__button__icon,
+  .income-filter__button__icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 9px;  
+    mat-icon {
+      color: #fff;
+    }
+  }
+  .expense-filter__button__icon {
+    background: #ee3f19;
+  }
+  .income-filter__button__icon {
+    background: #21c206;
+  }
+}

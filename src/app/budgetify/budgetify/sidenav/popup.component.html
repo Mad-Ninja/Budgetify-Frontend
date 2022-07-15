@@ -1,0 +1,10 @@
+<div class="account-delete__popup">
+  <h1 mat-dialog-title>{{ sidenavService.popupTitle }}</h1>
+  <div mat-dialog-content>{{ sidenavService.popupText }}</div>
+  <div mat-dialog-actions>
+    <button mat-button cdkFocusInitial (click)="closeDialog(); yesBtnClick()">
+      Yes
+    </button>
+    <button mat-button mat-dialog-close (click)="closeDialog()">No</button>
+  </div>
+</div>

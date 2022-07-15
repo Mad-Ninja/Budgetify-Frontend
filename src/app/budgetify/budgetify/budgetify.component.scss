@@ -1,0 +1,23 @@
+.budgetify-container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.budgetify__content {
+  margin: 0 auto;
+  width: 1450px;
+  flex-grow: 1;
+}
+.budgetify__footer {
+  flex-shrink: 0;
+}
+
+.sidenav {
+  height: 100%;
+
+  &__aside {
+    width: 580px;
+  }
+}

@@ -1,0 +1,836 @@
+<div class="sidenav__aside-content">
+  <div class="account-info" *ngIf="sidenavService.isAccountInfo">
+    <div class="account-info__header">
+      <div>
+        <h2>Account Information</h2>
+      </div>
+      <div class="account-info__btns">
+        <span
+          class="material-icons account-info__edit"
+          (click)="editAccountButton()"
+        >
+          edit
+        </span>
+        <span
+          class="material-icons account-info__delete"
+          (click)="openDialog()"
+        >
+          delete
+        </span>
+        <span
+          class="material-icons account-info__close"
+          (click)="sidenavService.closeSidenav()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="account-info__list">
+      <ul>
+        <li>
+          <div>Title:</div>
+          <div>{{ sidenavService.accountInfoTitle }}</div>
+        </li>
+        <li>
+          <div>Balance:</div>
+          <div>{{ sidenavService.accountInfoBalance }}</div>
+        </li>
+        <li>
+          <div>Currency:</div>
+          <div>{{ sidenavService.accountInfoCurrencyCode }}</div>
+        </li>
+        <li>
+          <div>Description:</div>
+          <div>{{ sidenavService.accountInfoDescription }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="account-add" *ngIf="sidenavService.isAccountAdd">
+    <div class="account-add__header">
+      <div>
+        <h2>Create Account</h2>
+      </div>
+      <div class="account-add__btns">
+        <span
+          class="material-icons account-info__close"
+          (click)="sidenavService.closeSidenav()"
+          (click)="formAddAccount.reset()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="account-add__form-container">
+      <form
+        class="account-add__form"
+        [formGroup]="addAccountForm"
+        (ngSubmit)="onSaveAccount(); formAddAccount.reset()"
+        #formAddAccount
+      >
+        <mat-form-field appearance="outline" class="title">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          <div
+            *ngIf="title1?.invalid && (title1?.dirty || title1?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="title1?.errors?.['required'] || title1?.errors?.['whitespace'] "
+            >
+              Title must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="title1?.errors?.['maxlength']"
+            >
+              Maximum number of characters 128.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="title1?.errors?.['uniqTitle']"
+            >
+              A account with the same title already exists.
+            </div>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="currency">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="currency">
+            <mat-option
+              *ngFor="let cur of budgetifyService.currenciesMy"
+              [value]="cur.code"
+              >{{ cur.name }}({{ cur.symbolNative }})</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="description">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <div
+            *ngIf="
+              description1?.invalid &&
+              (description1?.dirty || description1?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-describe"
+              *ngIf="description1?.errors?.['maxlength']"
+            >
+              Maximum number of characters 256.
+            </div>
+          </div>
+        </mat-form-field>
+        <button
+          class="button"
+          type="submit"
+          color="primary"
+          [disabled]="addAccountForm.invalid"
+          mat-raised-button
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="account-edit" *ngIf="sidenavService.isAccountEdit">
+    <div class="account-edit__header">
+      <div>
+        <h2>Edit Account</h2>
+      </div>
+      <div class="account-edit__btns">
+        <span
+          class="material-icons account-info__close"
+          (click)="sidenavService.closeSidenav()"
+          (click)="formEditAccount.reset()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="account-edit__form-container">
+      <form
+        class="account-edit__form"
+        [formGroup]="editAccountForm"
+        (ngSubmit)="onEditAccount(); formEditAccount.reset()"
+        #formEditAccount
+      >
+        <mat-form-field appearance="outline" class="title">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          <div
+            *ngIf="title2?.invalid && (title2?.dirty || title2?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="title2?.errors?.['required'] || title1?.errors?.['whitespace']"
+            >
+              Title must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="title2?.errors?.['maxlength']"
+            >
+              Maximum number of characters 128.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="title2?.errors?.['uniqTitle']"
+            >
+              A account with the same title already exists.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="currency">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="currency">
+            <mat-option
+              *ngFor="let cur of budgetifyService.currenciesMy"
+              [value]="cur.code"
+              >{{ cur.name }}({{ cur.symbolNative }})</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="description">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <div
+            *ngIf="
+              description2?.invalid &&
+              (description2?.dirty || description1?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-describe"
+              *ngIf="description2?.errors?.['maxlength']"
+            >
+              Maximum number of characters 256.
+            </div>
+          </div>
+        </mat-form-field>
+        <button
+          class="button"
+          type="submit"
+          color="primary"
+          [disabled]="editAccountForm.invalid"
+          mat-raised-button
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="category-add" *ngIf="sidenavService.isCategoryAdd">
+    <div class="category-add__header">
+      <div>
+        <h2>Add Category</h2>
+      </div>
+      <div class="category-add__btns">
+        <span
+          class="material-icons account-info__close"
+          (click)="sidenavService.closeSidenav()"
+          (click)="formAddCategory.reset()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="category-add__form-container">
+      <form
+        class="category-add__form"
+        [formGroup]="addCategoryForm"
+        (ngSubmit)="onAddCategory(); formAddCategory.reset()"
+        #formAddCategory
+      >
+        <div class="cat-type-btns">
+          <mat-button-toggle-group
+            name=""
+            aria-label="Font Style"
+            [formControl]="buttonCategTypeValueControl"
+          >
+            <mat-button-toggle value="expense" class="cat-type-expenses"
+              ><div class="expense-filter__button__icon">
+                <mat-icon>arrow_upward</mat-icon>
+              </div>
+              Expenses</mat-button-toggle
+            >
+            <mat-button-toggle value="income" class="cat-type-income"
+              ><div class="income-filter__button__icon">
+                <mat-icon>arrow_downward</mat-icon>
+              </div>
+              Income</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+        <mat-form-field appearance="outline" class="title">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          <div
+            *ngIf="titleCat?.invalid && (titleCat?.dirty || titleCat?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleCat?.errors?.['required'] || titleCat?.errors?.['whitespace']"
+            >
+              Title must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleCat?.errors?.['maxlength']"
+            >
+              Maximum number of characters 128.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleCat?.errors?.['uniqTitle']"
+            >
+              A category with the same title already exists.
+            </div>
+          </div>
+        </mat-form-field>
+        <button
+          class="button"
+          type="submit"
+          color="primary"
+          [disabled]="addCategoryForm.invalid"
+          mat-raised-button
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="transaction-info" *ngIf="sidenavService.isTransactionInfo">
+    <div class="transaction-info__header">
+      <div>
+        <h2>Transaction Information</h2>
+      </div>
+      <div class="transaction-info__btns">
+        <span
+          class="material-icons transaction-info__edit"
+          (click)="editTransactionButton()"
+        >
+          edit
+        </span>
+        <span
+          class="material-icons transaction-info__delete"
+          (click)="openDialog()"
+        >
+          delete
+        </span>
+        <span
+          class="material-icons transaction-info__close"
+          (click)="sidenavService.closeSidenav()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="transaction-info__list">
+      <div class="amount-container">
+        <div class="transaction-item__type">
+          <div
+            class="transaction-item__icon"
+            [class.income-icon]="
+              sidenavService.transactionInfoType === 'Income'
+            "
+            [class.expense-icon]="
+              sidenavService.transactionInfoType === 'Expenses'
+            "
+          >
+            <mat-icon *ngIf="sidenavService.transactionInfoType === 'Income'"
+              >arrow_downward</mat-icon
+            >
+            <mat-icon *ngIf="sidenavService.transactionInfoType === 'Expenses'"
+              >arrow_upward</mat-icon
+            >
+          </div>
+          <div class="type-name-transaction">
+            {{ sidenavService.transactionInfoType }}
+          </div>
+        </div>
+        <div
+          class="amount__text"
+          [class.expense-amount]="
+            sidenavService.transactionInfoType === 'Expenses'
+          "
+        >
+          {{ sidenavService.transactionInfoAmount
+          }}{{
+            cardService.accountCards[cardService.selectedIndex].currency
+              .symbolNative
+          }}
+        </div>
+      </div>
+      <div class="transaction-info__title">
+        {{ sidenavService.transactionInfoTitle }}
+      </div>
+      <div class="transaction-info-category">
+        <div
+          class="transaction-item__category"
+          *ngFor="let categ of sidenavService.transactionInfoCategory"
+        >
+          {{ categ.length > 11 ? (categ | slice: 0:10) + '...' : categ }}
+        </div>
+      </div>
+      <ul>
+        <li>
+          <div>Payment Date:</div>
+          <div>{{ sidenavService.transactionInfoDate | date: 'dd.MM.yy' }}</div>
+        </li>
+        <li>
+          <div>Payee:</div>
+          <div>{{ sidenavService.transactionInfoPayee }}</div>
+        </li>
+        <li>
+          <div>Description:</div>
+          <div>{{ sidenavService.transactionInfoDescription }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="transaction-add" *ngIf="sidenavService.isTransactionAdd">
+    <div class="transaction-add__header">
+      <div>
+        <h2>Add Transaction</h2>
+      </div>
+      <div class="transaction-add__btns">
+        <span
+          class="material-icons account-info__close"
+          (click)="sidenavService.closeSidenav()"
+          (click)="formAddTransaction.reset()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="transaction-add__form-container">
+      <form
+        class="transaction-add__form"
+        [formGroup]="addTransactionForm"
+        (ngSubmit)="onAddTransaction(); formAddTransaction.reset()"
+        #formAddTransaction
+      >
+        <div class="cat-type-btns">
+          <mat-button-toggle-group
+            name=""
+            aria-label="Font Style"
+            [formControl]="buttonCategTypeValueControl"
+          >
+            <mat-button-toggle
+              value="expense"
+              class="cat-type-expenses"
+              (click)="categoriesSortList('expense')"
+              ><div class="expense-filter__button__icon">
+                <mat-icon>arrow_upward</mat-icon>
+              </div>
+              Expenses</mat-button-toggle
+            >
+            <mat-button-toggle
+              value="income"
+              class="cat-type-income"
+              (click)="categoriesSortList('income')"
+              ><div class="income-filter__button__icon">
+                <mat-icon>arrow_downward</mat-icon>
+              </div>
+              Income</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+        <mat-form-field appearance="outline" class="title">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          <div
+            *ngIf="
+              titleTran1?.invalid && (titleTran1?.dirty || titleTran1?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleTran1?.errors?.['required'] || titleTran1?.errors?.['whitespace']"
+            >
+              Title must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleTran1?.errors?.['maxlength']"
+            >
+              Maximum number of characters 128.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleTran1?.errors?.['uniqTitle']"
+            >
+              A transaction with the same title already exists.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list" appearance="outline">
+          <mat-label>Categories*</mat-label>
+          <mat-chip-list #chipList aria-label="Category selection">
+            <mat-chip
+              *ngFor="let category of categoriess"
+              (removed)="remove(category)"
+            >
+              {{ category }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="New category..."
+              #catInput
+              [formControl]="categoryCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option
+              *ngFor="let category of filteredCategories | async"
+              [value]="category"
+            >
+              {{ category }}
+            </mat-option>
+          </mat-autocomplete>
+          <div
+            *ngIf="alreadyExistCategory || invalid"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="invalid"
+            >
+              Category must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="alreadyExistCategory"
+            >
+              You have already selected this category. Choose a new category.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="amount">
+          <mat-label>Amount</mat-label>
+          <input matInput formControlName="amount" step="0.01" />
+          <div
+            *ngIf="amount1?.invalid && (amount1?.dirty || amount1?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="amount1?.errors?.['required']"
+            >
+              Amount must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="amount1?.errors?.['pattern']"
+            >
+              Only integer or with two characters after the dot is allowed
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Choose a date in the format DD.MM.YYYY</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="date"
+            [max]="maxDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <div
+            *ngIf="date1?.invalid && (date1?.dirty || date1?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="date1?.errors?.['required']"
+            >
+              Date must be completed.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="payee">
+          <mat-label>Payee</mat-label>
+          <input matInput formControlName="payee" />
+          <div
+            *ngIf="payee1?.invalid && (payee1?.dirty || payee1?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="payee1?.errors?.['maxlength']"
+            >
+              Maximum number of characters 30.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="description">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <div
+            *ngIf="
+              description3?.invalid &&
+              (description3?.dirty || description1?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-describe"
+              *ngIf="description3?.errors?.['maxlength']"
+            >
+              Maximum number of characters 256.
+            </div>
+          </div>
+        </mat-form-field>
+        <button
+          class="button"
+          type="submit"
+          color="primary"
+          [disabled]="addTransactionForm.invalid || invalid || invalid1"
+          mat-raised-button
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="transaction-edit" *ngIf="sidenavService.isTransactionEdit">
+    <div class="transaction-add__header">
+      <div>
+        <h2>Edit Transaction</h2>
+      </div>
+      <div class="transaction-add__btns">
+        <span
+          class="material-icons account-info__close"
+          (click)="sidenavService.closeSidenav()"
+          (click)="formEditTransaction.reset()"
+        >
+          close
+        </span>
+      </div>
+    </div>
+    <div class="transaction-add__form-container">
+      <form
+        class="transaction-add__form"
+        [formGroup]="editTransactionForm"
+        (ngSubmit)="onEditTransaction(); formEditTransaction.reset()"
+        #formEditTransaction
+      >
+        <div class="cat-type-btns">
+          <mat-button-toggle-group
+            name=""
+            aria-label="Font Style"
+            [formControl]="buttonCategTypeValueControl"
+          >
+            <mat-button-toggle
+              value="expense"
+              class="cat-type-expenses"
+              (click)="categoriesSortList('expense')"
+              ><div class="expense-filter__button__icon">
+                <mat-icon>arrow_upward</mat-icon>
+              </div>
+              Expenses</mat-button-toggle
+            >
+            <mat-button-toggle
+              value="income"
+              class="cat-type-income"
+              (click)="categoriesSortList('income')"
+              ><div class="income-filter__button__icon">
+                <mat-icon>arrow_downward</mat-icon>
+              </div>
+              Income</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+        <mat-form-field appearance="outline" class="title">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          <div
+            *ngIf="
+              titleTran2?.invalid && (titleTran2?.dirty || titleTran2?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleTran2?.errors?.['required'] || titleTran2?.errors?.['whitespace']"
+            >
+              Title must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleTran2?.errors?.['maxlength']"
+            >
+              Maximum number of characters 128.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="titleTran2?.errors?.['uniqTitle']"
+            >
+              A transaction with the same title already exists.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list" appearance="outline">
+          <mat-label>Categories*</mat-label>
+          <mat-chip-list #chipList aria-label="Category selection">
+            <mat-chip
+              *ngFor="let category of categoriess"
+              (removed)="remove(category)"
+            >
+              {{ category }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="New category..."
+              #catInput
+              [formControl]="categoryCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option
+              *ngFor="let category of filteredCategories | async"
+              [value]="category"
+            >
+              {{ category }}
+            </mat-option>
+          </mat-autocomplete>
+          <div
+            *ngIf="alreadyExistCategory || invalid"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="invalid"
+            >
+              Category must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="alreadyExistCategory"
+            >
+              You have already selected this category. Choose a new category.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="amount">
+          <mat-label>Amount</mat-label>
+          <input matInput formControlName="amount" step="0.01" />
+          <div
+            *ngIf="amount2?.invalid && (amount2?.dirty || amount2?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="amount2?.errors?.['required']"
+            >
+              Amount must be completed.
+            </div>
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="amount2?.errors?.['pattern']"
+            >
+              Only integer or with two characters after the dot is allowed
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Choose a date in the format DD.MM.YYYY</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="date"
+            [max]="maxDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <div
+            *ngIf="date2?.invalid && (date2?.dirty || date2?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="date2?.errors?.['required']"
+            >
+              Date must be completed.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="payee">
+          <mat-label>Payee</mat-label>
+          <input matInput formControlName="payee" />
+          <div
+            *ngIf="payee2?.invalid && (payee2?.dirty || payee2?.touched)"
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-title"
+              *ngIf="payee2?.errors?.['maxlength']"
+            >
+              Maximum number of characters 30.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="description">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <div
+            *ngIf="
+              description4?.invalid &&
+              (description4?.dirty || description4?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              class="field-message validation-error error-describe"
+              *ngIf="description4?.errors?.['maxlength']"
+            >
+              Maximum number of characters 256.
+            </div>
+          </div>
+        </mat-form-field>
+        <button
+          class="button"
+          type="submit"
+          color="primary"
+          [disabled]="editTransactionForm.invalid || invalid || invalid1"
+          mat-raised-button
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

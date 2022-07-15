@@ -1,0 +1,21 @@
+<button
+  class="add-button_transaction"
+  *ngIf="addBtnService.isMainPage && cardService.isAccounts"
+  (click)="addBtnService.addTransactionClick()"
+>
+  <span class="material-icons"> add_circle </span>Add transaction
+</button>
+<button
+  class="add-button_account"
+  *ngIf="addBtnService.isMainPage"
+  (click)="addBtnService.addAccountClick()"
+>
+  <span class="material-icons"> add_circle </span>Add Account
+</button>
+<button
+  class="add-button_category"
+  *ngIf="addBtnService.isCategoryPage"
+  (click)="addBtnService.addCategoryClick()"
+>
+  <span class="material-icons"> add_circle </span>Add Category
+</button>

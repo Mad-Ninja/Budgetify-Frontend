@@ -1,0 +1,95 @@
+$cardcolor-active: linear-gradient(
+  129deg,
+  rgba(2, 0, 36, 1) 0%,
+  rgba(185, 15, 96, 1) 35%,
+  rgba(0, 212, 255, 1) 100%
+);
+
+$cardcolor: linear-gradient(
+  129deg,
+  rgba(2, 0, 36, 0.5) 0%,
+  rgba(185, 15, 96, 0.5) 35%,
+  rgba(0, 212, 255, 0.5) 100% 
+);
+.example-viewport {
+  height: 100%;
+  width: 500px;
+  &::-webkit-scrollbar { 
+    display: none; 
+}
+  
+}
+
+
+.active {
+  background: $cardcolor-active !important;
+  .card-item__info-link{
+    pointer-events: all !important;
+  }
+}
+.cards-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 87vh;
+  
+}
+.card-item {
+  margin-left: 30px;
+  margin-bottom: 30px;
+  -webkit-box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+  -moz-box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+  box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+  cursor: pointer;
+ background: $cardcolor;
+
+  filter: drop-shadow(5px 10px 20px rgba(0, 0, 0, 0.25));
+  border-radius: 10px;
+  width: 430px;
+  height: 184.57px;
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  padding-top: 30px;
+  margin-top: 44px;
+  &__title {
+    font-size: 32px;
+    line-height: 41px;
+    margin-left: 25px;
+
+    color: #ffffff;
+  }
+  &__amount {
+    margin-top: 17px;
+    margin-left: 25px;
+    font-size: 53px;
+    line-height: 68px;
+
+    color: #f8f8f8;
+  }
+  &__currency {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    color: #d376d7;
+    font-size: 64px;
+    background-color: #fff;
+    right: 20px;
+    top: 14px;
+  }
+  &__info-link {
+    pointer-events: none;
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    position: relative;
+    margin-left: 65%;
+    bottom: 15px;
+  }
+}
+.small-symbol{
+  font-size: 45px;
+}

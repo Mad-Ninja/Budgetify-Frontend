@@ -1,0 +1,49 @@
+.no-actions{
+  pointer-events: none;
+  cursor: default;
+  opacity:.5;
+}
+.categories-card {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding:0px 8px;
+    display: inline-block;
+    height: 57px;
+    border-radius:10px;
+    form{
+      display: inline-block;
+    }
+    mat-icon{
+      display:relative;
+      margin-top:15px;
+      transition:0.2s;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+      }
+      
+    }
+    input.ng-invalid.ng-touched {
+      border-bottom: 1px solid red;
+    }
+    .input-category{
+      border:none;
+      background:none;
+      display: inline-block;
+      position: relative;
+      top:-5px;
+      min-width:50px;
+      font-weight: 700;
+      font-size: 20px;
+      &:focus {
+        outline: 0px solid transparent;
+        border-bottom:1px solid #000;
+    }
+    }
+  }
+  .expense-category{
+    border:3px solid rgb(234, 19, 19);
+  }
+  .income-category{
+    border:3px solid rgb(41, 174, 29);
+  }

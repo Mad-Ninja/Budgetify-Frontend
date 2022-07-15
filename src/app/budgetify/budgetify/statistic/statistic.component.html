@@ -1,0 +1,172 @@
+<div class="budgetify__statistic">
+  <app-card></app-card>
+  <div
+    *ngIf="!cardService.isTransactions && cardService.isAccounts"
+    class="no-data__container"
+  >
+    You don't have any transactions. Please create one.
+  </div>
+  <div *ngIf="!cardService.isAccounts" class="no-data__container">
+    You don't have any accounts. Please create one.
+  </div>
+  <div
+    class="budgetify__statistic-content"
+    *ngIf="cardService.isTransactions && cardService.isAccounts"
+  >
+    <div class="statistic-btns">
+      <mat-button-toggle-group
+        name=""
+        aria-label="Font Style"
+        [(ngModel)]="buttonValue"
+      >
+        <mat-button-toggle
+          value="categories"
+          class="statistic-btns__categories"
+          (click)="toggleDisplay()"
+          >Categories Statistic</mat-button-toggle
+        >
+        <mat-button-toggle
+          value="monthly"
+          class="statistic-btns__montly"
+          (click)="toggleDisplay()"
+          >Monthly Statistic</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+    <mat-form-field class="data-picker">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker" [formGroup]="range">
+        <input
+          matInput
+          [max]="maxDate"
+          matStartDate
+          placeholder="Start date"
+          class="start-date"
+          formControlName="start"
+          (dateInput)="selectDateEnd()"
+        />
+        <input
+          matInput
+          [max]="maxDate"
+          matEndDate
+          placeholder="End date"
+          class="end-date"
+          formControlName="end"
+          (dateInput)="selectDateEnd()"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <div class="statistic-categories__wrapper" *ngIf="isShowCategories">
+      <div class="total-expenses__output">
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Total Expenses</mat-label>
+            <input matInput #message disabled [value]="totalExpensesSum" />
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="no-stat-exp" *ngIf="!noStatExp">
+        There is no report for the selected date. Choose a different date.
+      </div>
+      <div class="statistic-table__categories" *ngIf="noStatExp">
+        <mat-table
+          [dataSource]="statisticService.CATEGORIES_STATISTIC"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.category }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.amount
+              }}{{
+                cardService.accountCards[this.cardService.selectedIndex]
+                  .currency.symbolNative
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef> % in total </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.total }}%
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            *matHeaderRowDef="displayedColumnsCategories"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: displayedColumnsCategories"
+          ></mat-row>
+        </mat-table>
+      </div>
+    </div>
+
+    <div class="statistic-table__month" *ngIf="isShowMonthly">
+      <table
+        mat-table
+        [dataSource]="statisticService.MONTHLY_STATISTIC"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="month">
+          <th mat-header-cell *matHeaderCellDef>Month</th>
+          <td mat-cell *matCellDef="let monthItem">
+            {{ monthItem.month }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>Total</td>
+        </ng-container>
+
+        <ng-container matColumnDef="income">
+          <th mat-header-cell *matHeaderCellDef>Income</th>
+          <td mat-cell *matCellDef="let incomeValue">
+            {{ incomeValue.income | currency }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ statisticService.getTotalIncome() | currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expense">
+          <th mat-header-cell *matHeaderCellDef>Expenses</th>
+          <td mat-cell *matCellDef="let expenseValue">
+            {{ expenseValue.expense | currency }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ statisticService.getTotalPercentOfEconomy() | currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="economy">
+          <th mat-header-cell *matHeaderCellDef>Economy</th>
+          <td mat-cell *matCellDef="let economyValue">
+            {{ economyValue.economy | currency }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ statisticService.getTotalEconomy() | currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="percentOfEconomy">
+          <th mat-header-cell *matHeaderCellDef>% of Economy</th>
+          <td mat-cell *matCellDef="let percentOfEconomyValue">
+            {{ percentOfEconomyValue.percentOfEconomy | currency }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ statisticService.getTotalPercentOfEconomy() | currency }}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsMonthly"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsMonthly"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumnsMonthly"></tr>
+        <!-- <tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr> -->
+      </table>
+    </div>
+  </div>
+</div>

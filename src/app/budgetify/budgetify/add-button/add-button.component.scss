@@ -1,0 +1,28 @@
+.add-button_transaction,
+.add-button_account, .add-button_category {
+  width: 235px;
+  height: 49px;
+  border-radius: 10px;
+  background: #b9e2e6;
+  font-size: 20px;
+  line-height: 26px;
+  border: none;
+  text-align: left;
+  padding-top: 7px;
+  padding-left: 11px;
+  margin-bottom: 16px;
+  display: flex;
+  transition: 0.3s;
+  &:hover {
+    background: #bde5e8;
+    -webkit-box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+    -moz-box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+    box-shadow: -2px 4px 10px 8px rgba(34, 60, 80, 0.33);
+  }
+
+  .material-icons {
+    font-size: 35px;
+    margin-right: 9px;
+    color: #fff;
+  }
+}

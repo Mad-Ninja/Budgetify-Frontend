@@ -1,0 +1,86 @@
+<div role="search" class="search-field_wrapper">
+  <label for="search">Search for stuff</label>
+  <input
+    id="search"
+    type="search"
+    placeholder="Search..."
+    autofocus
+    required
+    [(ngModel)]="search"
+  />
+  <button type="submit">Go</button>
+</div>
+<div class="transactions-sort__button" (click)="sortTransactionsFromDate()">
+  <span class="material-icons"> sort </span>
+  Transaction Date
+</div>
+
+<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+  <div
+    (click)="transactionService.onClickTransactionCard(indexOfelement)"
+    class="transaction-item"
+    style="margin-bottom: 25px"
+    *cdkVirtualFor="
+      let transaction of transactionService.transactionsCards
+        | searchTransaction: search
+        | filterTransactions: transactionService.filter;
+      let indexOfelement = index
+    "
+  >
+    <div class="top-wrapper">
+      <div class="top-wrapper_in">
+        <div class="transaction-item__category">
+          {{
+            transaction.category[0].length > 11
+              ? (transaction.category[0] | slice: 0:10) + '...'
+              : transaction.category[0]
+          }}
+        </div>
+        <p class="transaction-item__title">
+          {{
+            transaction.title.length > 21
+              ? (transaction.title | slice: 0:21) + '...'
+              : transaction.title
+          }}
+        </p>
+      </div>
+      <div
+        class="transaction-item__amount"
+        [class.expense-amount]="
+          transactionService.transactionIcon(transaction.type) ===
+          'arrow_upward'
+        "
+      >
+        {{ transaction.amount
+        }}{{
+          cardService.accountCards[cardService.selectedIndex].currency
+            .symbolNative
+        }}
+      </div>
+    </div>
+    <div class="bottom-wrapper">
+      <div
+        class="transaction-item__icon"
+        [class.income-icon]="
+          transactionService.transactionIcon(transaction.type) ===
+          'arrow_downward'
+        "
+        [class.expense-icon]="
+          transactionService.transactionIcon(transaction.type) ===
+          'arrow_upward'
+        "
+      >
+        <mat-icon>{{
+          transactionService.transactionIcon(transaction.type)
+        }}</mat-icon>
+      </div>
+      <ul>
+        <li>{{ transaction.type }}</li>
+        <span>.</span>
+        <li>{{ transaction.dateOfPayment | date: 'dd.MM.yy' }}</li>
+        <span>.</span>
+        <li>{{ transaction.payee }}</li>
+      </ul>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>
