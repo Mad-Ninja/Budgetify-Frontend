@@ -29,7 +29,7 @@ export class CardService {
   ) {}
 
   getAccounts() {
-    this.http.get<ICard[]>('http://localhost:3000/accounts').subscribe(
+    this.http.get<ICard[]>('https://arcane-castle-89963.herokuapp.com/accounts').subscribe(
       (data) => {
         this.isAccounts = true;
         this.accountCards = data;

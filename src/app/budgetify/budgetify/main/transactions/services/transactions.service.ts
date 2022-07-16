@@ -28,7 +28,7 @@ export class TransactionsService {
   getTransactions(accountId: string) {
     return this.http
       .get<ITransaction[]>(
-        'http://localhost:3000/transactions/all/' + accountId
+        'https://arcane-castle-89963.herokuapp.com/transactions/all/' + accountId
       )
       .pipe(
         tap((res: ITransaction[]) => {

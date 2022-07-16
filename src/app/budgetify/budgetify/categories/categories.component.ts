@@ -32,7 +32,7 @@ export class CategoriesComponent implements OnInit {
     let accountCards: ICard[];
     
     this.http
-      .get<ICard[]>('http://localhost:3000/accounts')
+      .get<ICard[]>('https://arcane-castle-89963.herokuapp.com/accounts')
       .pipe(
         tap((res: ICard[]) => {
           accountCards = res;          
@@ -41,7 +41,7 @@ export class CategoriesComponent implements OnInit {
             let transactionCards:ITransaction[];
             this.http
               .get<ITransaction[]>(
-                'http://localhost:3000/transactions/all/' + accountId
+                'https://arcane-castle-89963.herokuapp.com/transactions/all/' + accountId
               )
               .pipe(
                 tap((res: ITransaction[]) => {

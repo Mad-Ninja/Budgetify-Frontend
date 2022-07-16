@@ -19,14 +19,14 @@ export class CategoriesService {
 
   editCategory(category:ICategory, id:string){
     return this.http.patch(
-      'http://localhost:3000/categories/' + id,
+      'https://arcane-castle-89963.herokuapp.com/categories/' + id,
       category
     );
   }
 
   deleteCategory(name:string, type:string){
     return this.http.delete(
-      'http://localhost:3000/categories/' + name + '/' + type,
+      'https://arcane-castle-89963.herokuapp.com/categories/' + name + '/' + type,
     );
   }
 }

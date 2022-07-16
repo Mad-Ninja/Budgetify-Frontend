@@ -24,7 +24,7 @@ export class AuthService {
     const body = new HttpParams().set('email', email).set('password', password);
 
     return this.http
-      .post<IAuth>('http://localhost:3000/login', body, {
+      .post<IAuth>('https://arcane-castle-89963.herokuapp.com/login', body, {
         headers: new HttpHeaders().set(
           'Content-Type',
           'application/x-www-form-urlencoded'

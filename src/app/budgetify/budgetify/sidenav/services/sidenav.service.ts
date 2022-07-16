@@ -135,22 +135,22 @@ export class SidenavService {
       currency: curr,
       description: description,
     };
-    return this.http.post('http://localhost:3000/accounts', account);
+    return this.http.post('https://arcane-castle-89963.herokuapp.com/accounts', account);
   }
 
   editAccount(editedAccount: any) {
     return this.http.patch(
-      'http://localhost:3000/accounts/' + this.accountId,
+      'https://arcane-castle-89963.herokuapp.com/accounts/' + this.accountId,
       editedAccount
     );
   }
 
   deleteAccount(accountId: string) {
-    return this.http.delete('http://localhost:3000/accounts/' + accountId);
+    return this.http.delete('https://arcane-castle-89963.herokuapp.com/accounts/' + accountId);
   }
 
   addCategory(category: ICategory[]) {
-    return this.http.post('http://localhost:3000/categories', category);
+    return this.http.post('https://arcane-castle-89963.herokuapp.com/categories', category);
   }
 
   addTransaction(
@@ -177,7 +177,7 @@ export class SidenavService {
     };
 
     return this.http.post(
-      'http://localhost:3000/transactions/add/' + accountId,
+      'https://arcane-castle-89963.herokuapp.com/transactions/add/' + accountId,
       transaction
     );
   }
@@ -188,12 +188,12 @@ export class SidenavService {
     
 
     return this.http.patch(
-      'http://localhost:3000/transactions/' + transaction._id,
+      'https://arcane-castle-89963.herokuapp.com/transactions/' + transaction._id,
       transaction
     );
   }
 
   deleteTransaction(){
-    return this.http.delete('http://localhost:3000/transactions/' + this.transactionId);
+    return this.http.delete('https://arcane-castle-89963.herokuapp.com/transactions/' + this.transactionId);
   }
 }

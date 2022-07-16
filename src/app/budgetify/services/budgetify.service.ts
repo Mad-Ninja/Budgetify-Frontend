@@ -56,7 +56,7 @@ export class BudgetifyService {
 
   getUserData(authUserId: string) {
     return this.http
-      .get<UserModel>('http://localhost:3000/users/' + authUserId)
+      .get<UserModel>('https://arcane-castle-89963.herokuapp.com/users/' + authUserId)
       .pipe(
         tap((res: UserModel) => {
           this.user = res;

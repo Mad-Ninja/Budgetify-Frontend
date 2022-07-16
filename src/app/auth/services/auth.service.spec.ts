@@ -67,7 +67,7 @@ describe('AuthService - testing', () => {
     });
     const req = httpController.expectOne({
       method: 'POST',
-      url: `http://localhost:3000/login`,
+      url: `https://arcane-castle-89963.herokuapp.com/login`,
     });
     req.flush(expectedResult);
   });
