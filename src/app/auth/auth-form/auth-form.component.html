@@ -1,4 +1,19 @@
 <div class="auth-form">
+  <ul style="position:absolute; bottom:20px; ">
+    <h5 style="font-size:15px; font-weight: 600; margin-left: -20px;">Users for Login/ Юзеры для входа</h5>
+    <li>
+      <p>email: alexey@gmail.com</p>
+      <p>password: 12345</p>
+    </li>
+    <li>
+      <p>email: nikolay@gmail.com</p>
+      <p>password: 12345</p>
+    </li>
+    <li>
+      <p>email: denis@gmail.com</p>
+      <p>password: 12345</p>
+    </li>
+  </ul>
   <h3>Budgetify</h3>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form__form">
     <div class="auth-form__error" *ngIf="errorMessage">
